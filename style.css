@@ -1,0 +1,115 @@
+:root {
+    --bg: #f8f9fb;
+    --card-bg: #ffffff;
+    --text: #2d2d2d;
+    --accent: #ffb757;
+    --accent-dark: #ff9d22;
+    --border: #e6e6e6;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --header-bg: linear-gradient(to right, #fff7e6, #ffe6c7);
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+}
+
+header {
+    background: var(--header-bg);
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+header h1 {
+    margin: 0;
+    font-weight: 700;
+    color: #000;
+}
+
+.main-nav a {
+    text-decoration: none;
+    padding: 10px 18px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    margin: 0 8px;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    transition: all 0.25s ease;
+}
+
+.main-nav a:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+main {
+    padding: 30px 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+section {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 25px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+table th {
+    background: #fafafa;
+    border-bottom: 1px solid var(--border);
+    padding: 14px;
+    text-align: left;
+    font-weight: 600;
+}
+
+table td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+button {
+    background: var(--accent);
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: var(--accent-dark);
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #555;
+}
