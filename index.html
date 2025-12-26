@@ -1,182 +1,364 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunshine AI Academy - Classes & Instructors</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sunshine AI Academy</title>
+
+<style>
+:root {
+  --bg1: #0f172a;
+  --bg2: #020617;
+  --accent: #fbbf24;
+  --glass: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.15);
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --blue: #38bdf8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+  background: radial-gradient(circle at top, var(--bg1), var(--bg2));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ================= HERO ================= */
+
+header {
+  padding: 80px 20px 120px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 3.4rem;
+  margin-bottom: 14px;
+  letter-spacing: -0.03em;
+}
+
+header p {
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
+/* ================= MAIN ================= */
+
+main {
+  max-width: 1200px;
+  margin: -80px auto 120px;
+  padding: 0 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 26px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.card span {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding-bottom: 40px;
+}
+
+/* ================= CHAT BUBBLE ================= */
+
+#chat-bubble {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 68px;
+  height: 68px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #000;
+  font-size: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  z-index: 9999;
+}
+
+/* ================= CHAT PANEL ================= */
+
+#chat-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 380px;
+  height: 560px;
+  background: rgba(17,24,39,0.85);
+  backdrop-filter: blur(18px);
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+#chat-header {
+  padding: 16px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: black;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Messages */
+#chat-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.message {
+  margin-bottom: 16px;
+  max-width: 85%;
+}
+
+.user {
+  margin-left: auto;
+  text-align: right;
+}
+
+.user .bubble {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: black;
+}
+
+.bot .bubble {
+  background: rgba(255,255,255,0.12);
+}
+
+.bubble {
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Typing */
+.typing {
+  display: flex;
+  gap: 6px;
+}
+
+.typing span {
+  width: 6px;
+  height: 6px;
+  background: var(--muted);
+  border-radius: 50%;
+  animation: blink 1.4s infinite;
+}
+
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+
+@keyframes blink {
+  0%{opacity:.2}
+  20%{opacity:1}
+  100%{opacity:.2}
+}
+
+/* Input */
+#chat-input-area {
+  padding: 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+}
+
+#chat-input {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: white;
+  outline: none;
+}
+
+#chat-send {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  #chat-panel {
+    width: 100%;
+    height: 100%;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+  }
+}
+</style>
 </head>
+
 <body>
-    <header>
-        <h1>Welcome to Sunshine AI Academy</h1>
-        <p>Your guide to classes, instructors, and schedules.</p>
-        <nav class="main-nav">
-            <a href="index.html">Classes & Instructors</a> |
-            <a href="resources.html">Student Resources & Support</a> |
-            <a href="waitlist.html">Join Waiting List</a>
-        </nav>
-    </header>
 
-    <main>
-        <section>
-            <h2>Classes</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Class</th>
-                        <th>Instructor</th>
-                        <th>Schedule</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>AI Fundamentals 1</td><td>Dr. Noah H.</td><td>Monday 6–8 PM</td></tr>
-                    <tr><td>AI Fundamentals 2</td><td>Prof. Nathan H.</td><td>Wednesday 6–8 PM</td></tr>
-                    <tr><td>AI Integration in Business</td><td>Prof. Mesi</td><td>Tuesday 6–8 PM</td></tr>
-                    <tr><td>AI Integration for Developers</td><td>Mr. Henok</td><td>Thursday 6–8 PM</td></tr>
-                </tbody>
-            </table>
-        </section>
+<header>
+  <h1>Sunshine AI Academy</h1>
+  <p>Modern AI education, powered by intelligent assistants</p>
+</header>
 
-        <section>
-            <h2>Instructors</h2>
-            <ul>
-                <li><strong>Dr. Noah H.</strong> - AI Fundamentals 1, Office Hours: Mon 5–6 PM</li>
-                <li><strong>Prof. Nathan H.</strong> - AI Fundamentals 2, Office Hours: Wed 5–6 PM</li>
-                <li><strong>Prof. Mesi</strong> - AI Integration in Business, Office Hours: Tue 5–6 PM</li>
-                <li><strong>Mr. Henok</strong> - AI Integration for Developers, Office Hours: Thu 5–6 PM</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Contact & Escalation</h2>
-            <p>Email: copilotstudiodemo@sunshine_AI.edu | Phone: (000) 123-4567</p>
-            <p><a href="#">Submit a support ticket</a></p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Sunshine AI Academy</p>
-        <p><em>Disclaimer: This is a fictional demo site. Classes, instructors, and schedules are not real.</em></p>
-    </footer>
-
-
-    <!-- ======================================= -->
-    <!-- Floating Chat Bubble + Copilot Panel    -->
-    <!-- ======================================= -->
-
-    <!-- Floating Chat Bubble -->
-    <div id="chat-bubble">
-        💬
+<main>
+  <div class="grid">
+    <div class="card">
+      <h3>AI Fundamentals 1</h3>
+      <p><span>Instructor:</span> Dr. Noah H.</p>
+      <p><span>Schedule:</span> Monday 6–8 PM</p>
     </div>
-
-    <!-- Slide-up Chat Panel -->
-    <div id="chat-panel">
-        <div id="chat-header">
-            <span>Sunshine AI Assistant</span>
-            <button id="chat-close">✕</button>
-        </div>
-
-        <iframe 
-            id="chat-iframe"
-            src="https://copilotstudio.microsoft.com/environments/698d0291-709e-ed2c-9e64-7bc5a2fb0b01/bots/Default_registrationSystem/webchat?__version__=2"
-            title="Sunshine AI Academy Virtual Assistant"
-            aria-label="AI Virtual Assistant Chat Window"
-            frameborder="0">
-        </iframe>
+    <div class="card">
+      <h3>AI Fundamentals 2</h3>
+      <p><span>Instructor:</span> Prof. Nathan H.</p>
+      <p><span>Schedule:</span> Wednesday 6–8 PM</p>
     </div>
+    <div class="card">
+      <h3>AI Integration in Business</h3>
+      <p><span>Instructor:</span> Prof. Mesi</p>
+      <p><span>Schedule:</span> Tuesday 6–8 PM</p>
+    </div>
+    <div class="card">
+      <h3>AI Integration for Developers</h3>
+      <p><span>Instructor:</span> Mr. Henok</p>
+      <p><span>Schedule:</span> Thursday 6–8 PM</p>
+    </div>
+  </div>
+</main>
 
-    <style>
-        /* Floating bubble */
-        #chat-bubble {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 60px;
-            height: 60px;
-            background: #ffbe40;
-            color: #000;
-            font-size: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 9999;
-            transition: transform 0.2s;
-        }
+<footer>
+  © 2025 Sunshine AI Academy • Fictional demo
+</footer>
 
-        #chat-bubble:hover {
-            transform: scale(1.1);
-        }
+<!-- CHAT -->
+<div id="chat-bubble">✨</div>
 
-        /* Slide-up panel */
-        #chat-panel {
-            position: fixed;
-            bottom: 0;
-            right: 20px;
-            width: 380px;
-            height: 520px;
-            background: #ffffff;
-            border-radius: 15px 15px 0 0;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 9998;
-        }
+<div id="chat-panel">
+  <div id="chat-header">
+    Sunshine AI
+    <button id="chat-close">✕</button>
+  </div>
 
-        /* Chat header */
-        #chat-header {
-            background: #ffbe40;
-            padding: 12px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
-        }
+  <div id="chat-messages"></div>
 
-        #chat-close {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-        }
+  <div id="chat-input-area">
+    <input id="chat-input" placeholder="Ask anything about Sunshine AI…" />
+    <button id="chat-send">➤</button>
+  </div>
+</div>
 
-        /* Chat iframe */
-        #chat-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+<script>
+const API_URL = "https://flowiseai-y3sl.onrender.com/api/v1/prediction/05862cb7-61d7-43f9-9e49-07818980dc3f";
 
-        /* Mobile responsive */
-        @media (max-width: 600px) {
-            #chat-panel {
-                width: 100%;
-                height: 70%;
-                right: 0;
-                border-radius: 15px 15px 0 0;
-            }
-        }
-    </style>
+const bubble = document.getElementById("chat-bubble");
+const panel = document.getElementById("chat-panel");
+const closeBtn = document.getElementById("chat-close");
+const messages = document.getElementById("chat-messages");
+const input = document.getElementById("chat-input");
+const sendBtn = document.getElementById("chat-send");
 
-    <script>
-        const bubble = document.getElementById("chat-bubble");
-        const panel = document.getElementById("chat-panel");
-        const closeBtn = document.getElementById("chat-close");
+bubble.onclick = () => {
+  panel.style.display = "flex";
+  bubble.style.display = "none";
+};
 
-        bubble.onclick = () => {
-            panel.style.display = "flex";
-            bubble.style.display = "none";
-        };
+closeBtn.onclick = () => {
+  panel.style.display = "none";
+  bubble.style.display = "flex";
+};
 
-        closeBtn.onclick = () => {
-            panel.style.display = "none";
-            bubble.style.display = "flex";
-        };
-    </script>
+function addMessage(text, sender) {
+  const wrap = document.createElement("div");
+  wrap.className = `message ${sender}`;
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.innerText = text;
+  wrap.appendChild(bubble);
+  messages.appendChild(wrap);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+async function sendMessage() {
+  const q = input.value.trim();
+  if (!q) return;
+
+  addMessage(q, "user");
+  input.value = "";
+  input.disabled = true;
+  sendBtn.disabled = true;
+
+  const typing = document.createElement("div");
+  typing.className = "message bot";
+  typing.innerHTML = `<div class="bubble typing"><span></span><span></span><span></span></div>`;
+  messages.appendChild(typing);
+  messages.scrollTop = messages.scrollHeight;
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q })
+    });
+    const data = await res.json();
+    typing.remove();
+    addMessage(data.text || "I couldn’t find that.", "bot");
+  } catch {
+    typing.remove();
+    addMessage("⚠️ Connection error.", "bot");
+  } finally {
+    input.disabled = false;
+    sendBtn.disabled = false;
+    input.focus();
+  }
+}
+
+sendBtn.onclick = sendMessage;
+input.addEventListener("keypress", e => e.key === "Enter" && sendMessage());
+</script>
 
 </body>
 </html>
